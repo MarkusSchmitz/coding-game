@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmBot - Automate Your Farm!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 FarmBot - Automate Your Farm!</h1>
+            <div class="stats">
+                <div class="stat">
+                    <span class="label">Money:</span>
+                    <span id="money" class="value">$100</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Harvested:</span>
+                    <span id="harvested" class="value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Cycle:</span>
+                    <span id="cycle" class="value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="game-area">
+                <canvas id="gameCanvas" width="600" height="600"></canvas>
+                <div class="controls">
+                    <button id="runBtn" class="btn btn-primary">Run Code (Space)</button>
+                    <button id="stopBtn" class="btn btn-danger">Stop (Esc)</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset Farm</button>
+                    <button id="stepBtn" class="btn btn-info">Step (S)</button>
+                </div>
+            </div>
+
+            <div class="code-area">
+                <div class="editor-header">
+                    <h3>Your Code</h3>
+                    <div class="speed-control">
+                        <label for="speed">Speed:</label>
+                        <input type="range" id="speed" min="1" max="100" value="50">
+                        <span id="speedValue">50</span>
+                    </div>
+                </div>
+                <textarea id="codeEditor" spellcheck="false">// Welcome to FarmBot! Write code to automate your farm.
+// Available commands:
+//   move(direction) - "up", "down", "left", "right"
+//   plant() - plant a seed ($10)
+//   water() - water the current crop
+//   harvest() - harvest mature crop (+$50)
+//   canHarvest() - returns true if crop is ready
+//   getMoney() - returns current money
+//   wait(cycles) - wait for N cycles
+
+// Example: Simple farming loop
+while (getMoney() >= 10) {
+    plant();
+
+    // Water 3 times to grow crop
+    for (let i = 0; i < 3; i++) {
+        water();
+        wait(1);
+    }
+
+    if (canHarvest()) {
+        harvest();
+    }
+
+    move("right");
+    if (getX() >= 7) {
+        move("down");
+        // Move to start of next row
+        while (getX() > 0) {
+            move("left");
+        }
+    }
+}</textarea>
+                <div class="console">
+                    <div class="console-header">
+                        <strong>Console</strong>
+                        <button id="clearConsole" class="btn-small">Clear</button>
+                    </div>
+                    <div id="console" class="console-output"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="help">
+            <details>
+                <summary>📖 How to Play</summary>
+                <div class="help-content">
+                    <h4>Goal:</h4>
+                    <p>Write code to automate your farm and maximize profit!</p>
+
+                    <h4>Commands:</h4>
+                    <ul>
+                        <li><code>move(direction)</code> - Move bot ("up", "down", "left", "right")</li>
+                        <li><code>plant()</code> - Plant a seed (costs $10)</li>
+                        <li><code>water()</code> - Water current crop (grows it)</li>
+                        <li><code>harvest()</code> - Harvest mature crop (earns $50)</li>
+                        <li><code>canHarvest()</code> - Check if crop is ready</li>
+                        <li><code>getMoney()</code> - Get current money</li>
+                        <li><code>getX() / getY()</code> - Get bot position</li>
+                        <li><code>wait(cycles)</code> - Wait for N cycles</li>
+                        <li><code>log(message)</code> - Print to console</li>
+                    </ul>
+
+                    <h4>Tips:</h4>
+                    <ul>
+                        <li>Crops need to be watered 3 times to mature</li>
+                        <li>Each plant costs $10, each harvest earns $50 (profit: $40)</li>
+                        <li>Optimize your code to farm efficiently!</li>
+                        <li>Use loops to automate repetitive tasks</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
