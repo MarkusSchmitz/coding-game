@@ -7,6 +7,50 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <h2>🤖 Welcome to FarmBot!</h2>
+            <p>Learn to automate your farm by writing JavaScript code!</p>
+
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Understand the Goal</h3>
+                        <p>Program your bot to plant seeds ($10), water them 3 times, and harvest mature crops ($50). Make profit!</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Use Simple Commands</h3>
+                        <p><code>plant()</code>, <code>water()</code>, <code>harvest()</code>, <code>move("direction")</code></p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Write & Run Code</h3>
+                        <p>The editor comes with example code. Click "Run Code" or press <kbd>Space</kbd> to start!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="startTutorial" class="btn btn-primary">Try Example Code</button>
+                <button id="skipTutorial" class="btn btn-secondary">Skip & Start Fresh</button>
+            </div>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="dontShowAgain">
+                Don't show this again
+            </label>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <h1>🤖 FarmBot - Automate Your Farm!</h1>
@@ -23,6 +67,10 @@
                     <span class="label">Cycle:</span>
                     <span id="cycle" class="value">0</span>
                 </div>
+                <div class="stat status" id="statusIndicator">
+                    <span class="status-dot"></span>
+                    <span id="status" class="value">Ready</span>
+                </div>
             </div>
         </header>
 
@@ -30,16 +78,38 @@
             <div class="game-area">
                 <canvas id="gameCanvas" width="600" height="600"></canvas>
                 <div class="controls">
-                    <button id="runBtn" class="btn btn-primary">Run Code (Space)</button>
-                    <button id="stopBtn" class="btn btn-danger">Stop (Esc)</button>
-                    <button id="resetBtn" class="btn btn-secondary">Reset Farm</button>
-                    <button id="stepBtn" class="btn btn-info">Step (S)</button>
+                    <button id="runBtn" class="btn btn-primary" title="Run your code (Shortcut: Space)">
+                        ▶ Run Code
+                    </button>
+                    <button id="stopBtn" class="btn btn-danger" title="Stop execution (Shortcut: Esc)" disabled>
+                        ⬛ Stop
+                    </button>
+                    <button id="stepBtn" class="btn btn-info" title="Execute one step at a time (Shortcut: S)">
+                        ⏭ Step
+                    </button>
+                    <button id="resetBtn" class="btn btn-secondary" title="Reset the farm to initial state">
+                        🔄 Reset
+                    </button>
                 </div>
+                <div id="actionFeedback" class="action-feedback"></div>
             </div>
 
             <div class="code-area">
                 <div class="editor-header">
-                    <h3>Your Code</h3>
+                    <div class="editor-title">
+                        <h3>Your Code</h3>
+                        <div class="template-selector">
+                            <label for="codeTemplate">Templates:</label>
+                            <select id="codeTemplate" title="Load example code templates">
+                                <option value="">-- Choose Template --</option>
+                                <option value="basic">Basic: Single Crop</option>
+                                <option value="row">Intermediate: Row Farming</option>
+                                <option value="grid">Advanced: Full Grid</option>
+                                <option value="efficient">Expert: Optimized</option>
+                                <option value="blank">Blank Canvas</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="speed-control">
                         <label for="speed">Speed:</label>
                         <input type="range" id="speed" min="1" max="100" value="50">
